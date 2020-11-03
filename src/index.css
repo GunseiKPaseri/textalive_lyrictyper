@@ -1,0 +1,310 @@
+/** Webフォント
+  * leafscape.beを利用しています
+  */
+/** きろ字 プロポーショナル new BSD license
+  * https://leafscape.be/fonts/30.html
+  */
+@font-face
+{
+font-family: きろ字 プロポーショナル;
+src: url('https://cdn.leafscape.be/kiloji/kiloji_p_web.woff2')
+     format("woff2");
+}
+/** チェックポイント 独自ライセンス（ウェブサイト・商用利用等における制限を設けない・報告不要の旨）
+  * https://leafscape.be/fonts/127.html
+  */
+@font-face
+{
+font-family: チェックポイント;
+src: url('https://cdn.leafscape.be/cpfont/CP_Font_web.woff2')
+     format("woff2");
+}
+
+
+
+*{
+    margin:0;
+    padding:0;
+}
+
+#sidebar{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+/** FontFamily
+  *
+  */
+/* default sans-serif */
+body{
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+}
+.serif{
+    font-family: "Times New Roman", "YuMincho", "Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif;
+}
+/* 手書き デフォルトに殆どなさそうなのでWebフォントを利用 */
+.cursive{
+    font-family: "きろ字 プロポーショナル", cursive;
+}
+/* 装飾 デフォルトに殆どなさそうなのでWebフォントを利用  */
+.fantasy{
+    font-family: "チェックポイント", fantasy;
+}
+/* 等角 とりあえずプログラマイメージで この辺は英語曲の方が(あったら)映えそう */
+.monospace{
+    font-family: "HackGen", "Hack", "Fira Code", "Myrica", "VL Gothic", "Ricty", "console",  "IPAGothic", monospace;
+}
+
+
+
+
+/** Console BOX
+  *
+  */
+body{
+    background-color:#fff;
+}
+#console{
+    position: fixed;
+    bottom:4em;
+    font-size:1.7em;
+    position: absolute;
+    left:25%;
+    width:50%;
+    height:auto;
+    color: #000000;
+    text-shadow:0.05em 0.05em 0.02em #ffffff;
+    transition: opacity 0.5s;
+}
+#console.hidden{
+    opacity: 0;
+}
+.newlinemark{
+    line-height:1em;
+}
+.newlinemark::before{
+    content:"↵";
+}
+.newlinemark.cr::before{
+    content:"←";
+    font-size:0.5em;
+}
+.newlinemark.lf::before{
+    content:"↓";
+    font-size:0.5em;
+}
+
+#cursor{
+    display: inline-block;
+    position: relative;
+    background-color:#000;
+    transition:0.1s;
+    bottom:-0.1em;
+    width:0.5em;
+    margin-top:0.9em;
+    height:0.05em;
+    margin-left:0.08em;
+    box-shadow:0.05em 0.05em 0.02em #ffffff;
+}
+#cursor.box{
+    margin:0;
+    height:1em;
+}
+#cursor.vbar{
+    margin-top:0;
+    width:0.08em;
+    height:1em;
+}
+/** 背景
+  *
+  */
+#back{
+    position:fixed;
+    top:0vh;
+    left:0vw;
+    width:100vw;
+    height:100vh;
+    transform: rotate(20deg);
+    transform-origin: center center;
+    font-size:10em;
+}
+#back div{
+    position: absolute;
+    width:auto;
+    height:1em;
+    bottom:100px;
+    background-color:#00f;
+    box-shadow:0.05em 0.05em 0.02em #ffffff;
+    text-align:center;
+    opacity: 0.4;
+}
+#back div.char{
+    background:none;
+    bottom:3em;
+    text-shadow:0.05em 0.05em 0.02em #ffffff;
+    box-shadow:none;
+    transform-origin: center center;
+    opacity: 0.6;
+}
+#back.freeze div{
+    animation-play-state: paused !important; 
+}
+@keyframes back_moving{
+    0%{
+        left:200vw;
+    }
+    100%{
+        left:min(-20em,-200vw);
+    }
+}
+@keyframes back_rotate{
+    0%{
+        transform:rotate(-10deg);
+    }
+    100%{
+        transform:rotate(10deg);
+    }
+}
+
+/** Playcontroller
+  *
+  */
+#playcontroller{
+    width:256px;
+    height:40px;
+    font-size:1.4em;
+    padding:4px;
+    box-sizing:border-box;
+    text-align:center;
+    user-select:none;
+}
+#playcontroller.hidden{
+    display:none;
+}
+
+/** Overlay
+  *
+  */
+#overlay{
+    position: absolute;
+    color: #f0f0f0;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(100, 100, 100, .5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: 0.3s;
+}
+#overlay div{
+    font-size:5em;
+    text-align: center;
+}
+
+#overlay.hidden{
+    opacity:0;
+    pointer-events: none;
+}
+
+#overlay.hidden div{
+    display: none;
+}
+
+
+
+
+
+/** 再生ボタン
+  */
+
+/* 円 */
+.play-button,
+.prev-button{
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    top: 0.2em;
+    width: 1.1em;
+    height: 1.1em;
+    border: 0.1em solid #333;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 0.1s;
+    background-color: #f0f0f0;
+}
+.play-button:hover,
+.prev-button:hover{
+    transform: rotate(360deg);
+}
+/* 三角 */
+.play-button::before{
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-top: 0.25em solid transparent;
+    border-bottom: 0.25em solid transparent;
+    border-left: 0.3em solid #333;
+    width: 0.3em;
+    height: 0.5em;
+    top: 0.2em;
+    left: 0.35em;
+    transition: 0.1s;
+}
+
+.play-button.playing{
+    border-color:#99c;
+    background-color:#fff;
+}
+.play.playing::before{
+    border-left-color: #99c;
+}
+/* 一時停止の棒 */
+.play-button.playing::before{
+    border-top:none;
+    border-bottom:none;
+    border-left: 0.1em solid #99c;
+    border-right: 0.1em solid #99c;
+    width: 0.3em;
+    height: 0.3em;
+    top: 0.3em;
+    left: 0.3em;
+    transition: 0.1s;
+}
+/* 先頭に戻る */
+.prev-button::before,
+.prev-button::after{
+    content: "";
+    display: block;
+    position: absolute;
+    box-sizing: border-box;
+    height: 0.4em;
+    top: 0.25em;
+}
+.prev-button::before{
+    width: 0.1em;
+    border-radius: 0.1em;
+    right: 0.5em;
+    background-color: #333;
+}
+.prev-button::after{
+    width: 0;
+    border-top: 0.2em solid transparent;
+    border-bottom: 0.2em solid transparent;
+    border-right: 0.25em solid #333;
+    right: 0.25em;
+}
+
+.prev-button:active{
+    border-color :#666;
+}
+.prev-button:active::before{
+    border-color :#666;
+    background-color: #666;
+}
+.prev-button:active::after{
+    border-right-color :#666;
+}

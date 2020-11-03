@@ -1,0 +1,28 @@
+{
+  "name": "textalive-lyrictyper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html --out-dir dev",
+    "devs": "parcel src/index.html --https --out-dir dev",
+    "build": "parcel build src/index.html --public-url ./ --out-dir docs --no-source-maps",
+    "clean": "del-cli .cache dev docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GunseiKPaseri/textalive-lyrictyper.git"
+  },
+  "keywords": [
+    "textalive"
+  ],
+  "author": "GunseiKPaseri",
+  "license": "MIT",
+  "dependencies": {
+    "dat.gui": "^0.7.7",
+    "del-cli": "^3.0.1",
+    "parcel": "^1.12.4",
+    "textalive-app-api": "^0.2.0",
+    "typescript": "^4.0.5"
+  }
+}
